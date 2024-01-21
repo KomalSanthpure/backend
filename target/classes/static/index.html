@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Backend to Frontend Example</title>
+</head>
+<body>
+
+    <h1>Add User:</h1>
+    <form id="userForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="city">city:</label>
+        <input type="text" id="city" name="city" required>
+
+        <button type="button" onclick="addUser()">Add User</button>
+    </form>
+
+    <script>
+        function addUser() {
+            const username = document.getElementById('username').value;
+            const city = document.getElementById('city').value;
+
+            // Create a user object
+            const user = { username, city };
+            // Send user data to the backend
+            fetch('/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('User added successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add user.');
+            });
+        }
+    </script>
+
+</body>
+</html>
